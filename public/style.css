@@ -33,6 +33,7 @@ body {
 }
 
 [data-position="quotes"] {
+  list-style:none ;
   grid-area: quotes;
   overflow: scroll;
 }
@@ -43,6 +44,12 @@ body {
   padding: 1rem;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
 }
+
+.botao-apagar-tudo{
+  float: right;
+  margin-top: 15px;
+}
+
 
 h1,
 h2 {

@@ -37,8 +37,21 @@ deletar.addEventListener('click',ev=>{
         .then(data => {
           window.location.reload()
         })
-
-
-
 })
 
+
+function apagarTudo(){
+  fetch('/quotesDelAll', {
+    method: 'delete',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: ''
+    })
+  })
+    .then(res => {
+      if (res.ok) return res.json()
+    })
+    .then(data => {
+      window.location.reload()
+    })
+}
