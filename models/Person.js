@@ -6,4 +6,4 @@ const personSchema = new Schema({
     quote:String  
   })
   
-  module.exports = mongoose.model('Person',personSchema)
+module.exports = mongoose.model('Person',personSchema)

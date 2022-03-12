@@ -1,48 +1,34 @@
-//server
-const mongoose = require('mongoose')
-const express = require('express')
-const bodyParser = require('body-parser')
-const app = express()
-const MongoClient = require('mongodb').MongoClient
-const Person = require('./models/Person')
+const Person = require('../models/Person')
 
-const url = 'mongodb://127.0.0.1:27017/aprendendo_mongo'
-// const dbName = 'aprendendo_mongo'
+class PersonController {
 
-mongoose.connect(url, { useNewUrlParser: true })
-app.set('view engine', 'ejs')
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+  async criaPessoas(pessoa){
+    
+    await Person.create(pessoa)
+    //   ,err=>{
+    //   if (err)
+    //     return res.status(400).json({
+    //       error: true,
+    //       message: "Erro ao tentar inserir usuário no MongoDB",
+    //     });
 
-app.use(express.static('public'))
+    //   return res.status(200).json({
+    //     error: false,
+    //     message: "Usuário com frase cadastrado com sucesso ",
+    //   });
+    // })
 
-app.listen(3000, function () {
-  console.log('listening on 3000')
-})
 
-const db = mongoose.connection
+  }
 
-db.once('open', (_) => {
-  console.log('Database connected:', url)
-})
 
-db.on('error', (err) => {
-  console.error('connection error:', err)
-})
 
-const criaPessoas = async (pessoa) => {
-  const newPeople = new Person({
-    name: pessoa.name,
-    quote: pessoa.quote,
-  })
-  const doc = await newPeople.save()
-  console.log('await', doc)
+
+
 }
 
-const getAllPeople = async () => {
-  const pessoas = await Person.find()
-  return pessoas
-}
+module.exports = new PersonController();
+
 
 // const updatePerson = async ()=>{
 
@@ -53,51 +39,10 @@ const deletePersonByName = async (person) => {
   const deletando = await pessoa.remove()
 }
 
-const delAll = async()=>{
-  await Person.deleteMany({})
-}
+
 
 //rota getAllpeople
-app.get('/', (req, res) => {
-  // console.log('oi');
-  getAllPeople()
-    .then((results) => {
-      // console.log(results)
-      res.render('index.ejs', { quotes: results })
-    })
-    .catch((err) => {
-      console.log('erro:', err)
-    })
-})
 
-//rota postPeople
-app.post('/quotes', (req, res) => {
-  criaPessoas(req.body).then((result) => {
-    getAllPeople().then((results) => {
-      res.render('index.ejs', { quotes: results })
-    })
-  })
-})
-
-app.delete('/quotes', (req, res) => {
-  
-  deletePersonByName(req.body)
-    .then((result) => {
-      res.json(`Deleted Darth Vadar's quote`)
-    })
-    .catch((error) => console.error(error))
-
-  // console.log(cursor)
-})
-
-app.delete('/quotesDelAll', (req, res) => {
-  delAll()
-  .then(res=>{
-    res.json(`Deleted all`)
-  })
-  .catch((error) => console.error(error))
-  // console.log(cursor)
-})
 
 //
 
