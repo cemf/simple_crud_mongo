@@ -33,7 +33,7 @@ body {
 }
 
 [data-position="quotes"] {
-  list-style:none ;
+  list-style: none;
   grid-area: quotes;
   overflow: scroll;
 }
@@ -45,7 +45,7 @@ body {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
 }
 
-.botao-apagar-tudo{
+.botao-apagar-tudo {
   float: right;
   margin-top: 15px;
 }
@@ -59,18 +59,17 @@ h2 {
 
 
 .site-header {
-    background-color: rgba(0, 0, 0, .85);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
-  }
+  background-color: rgba(0, 0, 0, .85);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
 
-  .site-header a {
-    color: #8e8e8e;
-    transition: color .15s ease-in-out;
-  }
-  .site-header a:hover {
-    color: #fff;
-    text-decoration: none;
-  }
+.site-header a {
+  color: #8e8e8e;
+  transition: color .15s ease-in-out;
+}
 
-
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+}

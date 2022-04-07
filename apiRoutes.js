@@ -5,7 +5,7 @@ const app = express()
 const MongoClient = require('mongodb').MongoClient
 const personController = require('./Controllers/personController')
 const Person = require('./models/Person')
-
+const { json } = require('body-parser')
 
 const url = 'mongodb://127.0.0.1:27017/aprendendo_mongo'
 // const dbName = 'aprendendo_mongo'
@@ -33,10 +33,10 @@ db.on('error', (err) => {
 
 app.get('/', (req, res) => {
   // console.log('oi');
-  getAllPeople()
-    .then((results) => {
-      // console.log(results)
-      res.render('index.ejs', { quotes: results })
+  personController
+    .getAllPessoas()
+    .then((result) => {
+      res.render('index.ejs', { quotes: result })
     })
     .catch((err) => {
       console.log('erro:', err)
@@ -45,23 +45,23 @@ app.get('/', (req, res) => {
 
 //rota postPeople
 app.post('/quotes', (req, res) => {
+  personController.criaPessoas(req.body).then((result) => {
+    personController
+      .getAllPessoas()
+      .then((results) => {
+        // console.log(results)
+        // res.render('index.ejs', { quotes: results })
+      })
+      .catch((err) => {
+        console.log('erro:', err)
+      })
+  })
 
-    personController.criaPessoas(req.body).then((result) => {
-        getAllPeople()
-            .then((results) => {
-            // console.log(results)
-            res.render('index.ejs', { quotes: results })
-            })
-            .catch((err) => {
-                console.log('erro:', err)
-            })
-    })
-
-//   criaPessoas(req.body).then((result) => {
-//     getAllPeople().then((results) => {
-//      
-//     })
-//   })
+  //   criaPessoas(req.body).then((result) => {
+  //     getAllPeople().then((results) => {
+  //
+  //     })
+  //   })
 })
 
 // app.delete('/quotes', (req, res) => {
@@ -75,20 +75,18 @@ app.post('/quotes', (req, res) => {
 // })
 
 app.delete('/quotesDelAll', (req, res) => {
-  delAll()
-    .then((res) => {
-        console.log(res)
-      res.json(`Deleted all`)
+  const del = async () => {
+    return await Person.deleteMany({})
+  }
+  del()
+    .then((resp) => {
+      console.log(resp)
+      if (resp) {
+        res.json('tudo ok')
+      } else {
+        res.json('??')
+      }
     })
     .catch((error) => console.error(error))
   // console.log(cursor)
 })
-
-const delAll = async() => {
-    await Person.deleteMany({})
-}
-
-const getAllPeople = async () => {
-    const pessoas = await Person.find()
-    return pessoas
-  }

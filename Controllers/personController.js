@@ -1,9 +1,12 @@
 const Person = require('../models/Person')
 
 class PersonController {
+  async getAllPessoas() {
+    const allPeople = await Person.find()
+    return allPeople
+  }
 
-  async criaPessoas(pessoa){
-    
+  async criaPessoas(pessoa) {
     await Person.create(pessoa)
     //   ,err=>{
     //   if (err)
@@ -17,18 +20,10 @@ class PersonController {
     //     message: "Usuário com frase cadastrado com sucesso ",
     //   });
     // })
-
-
   }
-
-
-
-
-
 }
 
-module.exports = new PersonController();
-
+module.exports = new PersonController()
 
 // const updatePerson = async ()=>{
 
@@ -39,10 +34,7 @@ const deletePersonByName = async (person) => {
   const deletando = await pessoa.remove()
 }
 
-
-
 //rota getAllpeople
-
 
 //
 
