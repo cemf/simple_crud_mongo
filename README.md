@@ -8,5 +8,5 @@ Update quote
 
 Delete single quote 
 
-Delete all quotes from a person 
+Delete all quotes of a person 
 
