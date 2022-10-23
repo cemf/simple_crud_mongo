@@ -5,10 +5,9 @@ const app = express()
 const MongoClient = require('mongodb').MongoClient
 const personController = require('./Controllers/personController')
 const Person = require('./models/Person')
-const { json } = require('body-parser')
+//const { json } = require('body-parser')
 
 const url = 'mongodb://127.0.0.1:27017/aprendendo_mongo'
-// const dbName = 'aprendendo_mongo'
 
 mongoose.connect(url, { useNewUrlParser: true })
 app.set('view engine', 'ejs')
@@ -32,7 +31,6 @@ db.on('error', (err) => {
 })
 
 app.get('/', (req, res) => {
-  // console.log('oi');
   personController
     .getAllPessoas()
     .then((result) => {
@@ -45,48 +43,26 @@ app.get('/', (req, res) => {
 
 //rota postPeople
 app.post('/quotes', (req, res) => {
-  personController.criaPessoas(req.body).then((result) => {
-    personController
-      .getAllPessoas()
-      .then((results) => {
-        // console.log(results)
-        // res.render('index.ejs', { quotes: results })
-      })
-      .catch((err) => {
-        console.log('erro:', err)
-      })
-  })
-
-  //   criaPessoas(req.body).then((result) => {
-  //     getAllPeople().then((results) => {
-  //
-  //     })
-  //   })
+  const create = async () =>
+  {
+    return await personController.criaPessoas(req.body)
+  }
+  create().then((resp)=>{
+    res.redirect('/');
+  }).catch((error) => console.error(error))
 })
-
-// app.delete('/quotes', (req, res) => {
-//   deletePersonByName(req.body)
-//     .then((result) => {
-//       res.json(`Deleted Darth Vadar's quote`)
-//     })
-//     .catch((error) => console.error(error))
-
-//   // console.log(cursor)
-// })
 
 app.delete('/quotesDelAll', (req, res) => {
   const del = async () => {
-    return await Person.deleteMany({})
+    return await personController.deleteAll()
   }
   del()
     .then((resp) => {
-      console.log(resp)
       if (resp) {
         res.json('tudo ok')
       } else {
-        res.json('??')
+        res.json('Erro ao deletar tudo')
       }
     })
     .catch((error) => console.error(error))
-  // console.log(cursor)
 })
