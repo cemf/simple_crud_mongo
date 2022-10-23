@@ -4,6 +4,6 @@ This is a crud of quotes, you can, now, add quotes (person and quote) and delete
 
 Will implement 
 
-Update quote
-Delete single quote 
-Delete all quotes from a person
+Update quote /n
+Delete single quote /n
+Delete all quotes from a person /n
